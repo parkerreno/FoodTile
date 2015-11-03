@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NotificationsExtensions.Tiles;
+using NotificationsExtensions.Toasts;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 
@@ -79,7 +80,30 @@ namespace FoodTile
 
         private void Button_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    TitleText = new ToastText()
+                    {
+                        Text = "Balance Updated"
+                    },
+                    BodyTextLine1 = new ToastText()
+                    {
+                        Text = "New balance: $568.12"
+                    },
+                    BodyTextLine2 = new ToastText()
+                    {
+                        Text = "Average spend over 47 days: $12.67"
+                    }
+                },
+                Scenario= ToastScenario.Default
+            };
+            
+            var toast = new ToastNotification(toastContent.GetXml());
 
+            var note = ToastNotificationManager.CreateToastNotifier();
+            note.Show(toast);
         }
     }
 }
