@@ -8,6 +8,9 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <StackPanel>
+            <Button Tapped="Button_Tapped">UPDATE TILE!</Button>
+            <Button Tapped="Button_Tapped_1">Send Notification</Button>
+        </StackPanel>
     </Grid>
 </Page>
