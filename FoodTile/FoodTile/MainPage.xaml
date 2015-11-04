@@ -11,6 +11,7 @@
         <StackPanel>
             <Button Tapped="Button_Tapped">UPDATE TILE!</Button>
             <Button Tapped="Button_Tapped_1">Send Notification</Button>
+            <Button Tapped="Button_Tapped_2">Register Background Task</Button>
         </StackPanel>
     </Grid>
 </Page>

@@ -21,9 +21,10 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundUpdater.BalancerChecker">
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundUpdater.BalanceCheck">
           <BackgroundTasks>
             <Task Type="general" />
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
       </Extensions>

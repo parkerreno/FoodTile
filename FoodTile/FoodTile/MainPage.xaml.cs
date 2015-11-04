@@ -16,6 +16,7 @@ using NotificationsExtensions.Tiles;
 using NotificationsExtensions.Toasts;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
+using Windows.ApplicationModel.Background;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -104,6 +105,36 @@ namespace FoodTile
 
             var note = ToastNotificationManager.CreateToastNotifier();
             note.Show(toast);
+        }
+
+        private async void Button_Tapped_2(object sender, TappedRoutedEventArgs e)
+        {
+            const string TASK_NAME = "balanceCheck";
+            if (!IsTaskRegistered(TASK_NAME))
+            {
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = TASK_NAME;
+                builder.TaskEntryPoint = "BackgroundUpdater.BalanceCheck";
+                builder.SetTrigger(new TimeTrigger(15, false));
+                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+
+                var x = await BackgroundExecutionManager.RequestAccessAsync();
+                
+                BackgroundTaskRegistration task = builder.Register();
+            }
+        }
+
+        private bool IsTaskRegistered(string taskName)
+        {
+            foreach (var task in BackgroundTaskRegistration.AllTasks)
+            {
+                if (task.Value.Name == taskName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
