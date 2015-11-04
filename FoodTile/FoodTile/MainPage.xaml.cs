@@ -118,9 +118,10 @@ namespace FoodTile
                 builder.SetTrigger(new TimeTrigger(15, false));
                 //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
 
-                var x = await BackgroundExecutionManager.RequestAccessAsync();
+                await BackgroundExecutionManager.RequestAccessAsync();
                 
                 BackgroundTaskRegistration task = builder.Register();
+               
             }
         }
 
