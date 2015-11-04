@@ -116,7 +116,7 @@ namespace FoodTile
                 builder.Name = TASK_NAME;
                 builder.TaskEntryPoint = "BackgroundUpdater.BalanceCheck";
                 builder.SetTrigger(new TimeTrigger(15, false));
-                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable)); //this doesn't work...
 
                 await BackgroundExecutionManager.RequestAccessAsync();
                 

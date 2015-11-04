@@ -26,6 +26,10 @@ namespace BackgroundUpdater
                     BodyTextLine1 = new ToastText()
                     {
                         Text = "Background task ran successfully"
+                    },
+                    BodyTextLine2 = new ToastText()
+                    {
+                        Text = $"Toast at {DateTime.Now.ToLocalTime().ToString()}"
                     }
                 }
             };
