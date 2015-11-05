@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodTile
+namespace MUC
 {
-
-    public class Rootobject
+    public class UserHfsData
     {
         public HuskyCard employee_husky_card { get; set; }
         public HuskyCard resident_dining { get; set; }
