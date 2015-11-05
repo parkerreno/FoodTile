@@ -160,7 +160,14 @@ namespace FoodTile
         private async void Button_Tapped_4(object sender, TappedRoutedEventArgs e)
         {
             var data = await connector.GetHfsData();
-            var md = new MessageDialog("$" + data.resident_dining.balance, "Dining Balance");
+            var termInfo = await connector.GetTermInfo();
+
+            var lastDay = DateTime.Parse(termInfo.term.last_final_exam_date).Date;
+            var daysRemaining = lastDay - DateTime.Now.Date;
+
+            double average = data.resident_dining.balance / daysRemaining.TotalDays;
+
+            var md = new MessageDialog($"${data.resident_dining.balance:0.00}Dining Balance.  {daysRemaining.TotalDays} days remaining.  ${average:0.00} average spend");
             await md.ShowAsync();
         }
     }

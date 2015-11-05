@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,24 @@ namespace FoodTile.Views
         public Login()
         {
             this.InitializeComponent();
+        }
+
+        private void SignIn_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("Features will be limited", "Are You Sure?");
+            dialog.Commands.Add(new UICommand("Okay"));
+            dialog.Commands.Add(new UICommand("Cancel"));
+            var result = await dialog.ShowAsync();
+
+            if (result.Label == "Okay")
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }

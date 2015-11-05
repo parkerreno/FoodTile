@@ -108,6 +108,18 @@ namespace MUC
             return (UserHfsData)ser.ReadObject(raw);
         }
 
+        public async Task<TermInfo> GetTermInfo()
+        {
+            const string TERM_DATA_URL = "https://my.uw.edu/api/v1/schedule/current";
+
+            var resp = await client.GetAsync(TERM_DATA_URL);
+
+            var raw = await resp.Content.ReadAsStreamAsync();
+
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(TermInfo));
+            return (TermInfo)ser.ReadObject(raw);
+        }
+
         /// <summary>
         /// Some hacked together method to get a form value from HTML
         /// </summary>
