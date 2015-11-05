@@ -167,7 +167,7 @@ namespace FoodTile
 
             double average = data.resident_dining.balance / daysRemaining.TotalDays;
 
-            var md = new MessageDialog($"${data.resident_dining.balance:0.00}Dining Balance.  {daysRemaining.TotalDays} days remaining.  ${average:0.00} average spend");
+            var md = new MessageDialog($"${data.resident_dining.balance:0.00} Dining Balance. \n{daysRemaining.TotalDays} days remaining. ${average:0.00} average spend");
             await md.ShowAsync();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -35,12 +36,13 @@ namespace FoodTile.Views
 
         private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var dialog = new MessageDialog("Features will be limited", "Are You Sure?");
-            dialog.Commands.Add(new UICommand("Okay"));
+            ResourceLoader rl = new ResourceLoader();
+            var dialog = new MessageDialog(rl.GetString("SingleUseWarning"), "Are You Sure?");
+            dialog.Commands.Add(new UICommand("I'm Sure"));
             dialog.Commands.Add(new UICommand("Cancel"));
             var result = await dialog.ShowAsync();
 
-            if (result.Label == "Okay")
+            if (result.Label == "I'm Sure")
             {
                 Frame.Navigate(typeof(MainPage));
             }
