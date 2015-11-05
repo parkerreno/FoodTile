@@ -17,6 +17,10 @@ using NotificationsExtensions.Toasts;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Windows.ApplicationModel.Background;
+using MUC;
+using Windows.Security.Credentials;
+using Windows.UI.Popups;
+
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,6 +31,7 @@ namespace FoodTile
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private MUConnector connector;
         public MainPage()
         {
             this.InitializeComponent();
@@ -51,8 +56,8 @@ namespace FoodTile
 
             items.Add(new TileText()
             {
-                Text="Avg/Day: $12.42",
-                Style = TileTextStyle.Caption 
+                Text = "Avg/Day: $12.42",
+                Style = TileTextStyle.Caption
             });
 
             var tileBinding = new TileBinding();
@@ -98,9 +103,9 @@ namespace FoodTile
                         Text = "Average spend over 47 days: $12.67"
                     }
                 },
-                Scenario= ToastScenario.Default
+                Scenario = ToastScenario.Default
             };
-            
+
             var toast = new ToastNotification(toastContent.GetXml());
 
             var note = ToastNotificationManager.CreateToastNotifier();
@@ -119,9 +124,9 @@ namespace FoodTile
                 //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable)); //this doesn't work...
 
                 await BackgroundExecutionManager.RequestAccessAsync();
-                
+
                 BackgroundTaskRegistration task = builder.Register();
-               
+
             }
         }
 
@@ -136,6 +141,27 @@ namespace FoodTile
             }
 
             return false;
+        }
+
+        private async void Button_Tapped_3(object sender, TappedRoutedEventArgs e)
+        {
+            if (connector != null)
+            {
+                connector.Dispose();
+                connector = null;
+            }
+            PasswordCredential c = new PasswordCredential("myuw", UserName.Text, Password.Password);
+            connector = new MUConnector(c);
+            bool success = await connector.Login();
+
+            await new MessageDialog($"Login success: {success}", "Login Status").ShowAsync();
+        }
+
+        private async void Button_Tapped_4(object sender, TappedRoutedEventArgs e)
+        {
+            var data = await connector.GetHfsData();
+            var md = new MessageDialog("$" + data.resident_dining.balance, "Dining Balance");
+            await md.ShowAsync();
         }
     }
 }

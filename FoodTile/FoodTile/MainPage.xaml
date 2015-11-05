@@ -12,6 +12,10 @@
             <Button Tapped="Button_Tapped">UPDATE TILE!</Button>
             <Button Tapped="Button_Tapped_1">Send Notification</Button>
             <Button Tapped="Button_Tapped_2">Register Background Task</Button>
+            <TextBox x:Name="UserName" PlaceholderText="Username"></TextBox>
+            <PasswordBox x:Name="Password" PlaceholderText="Password"></PasswordBox>
+            <Button Tapped="Button_Tapped_3">Login</Button>
+            <Button Tapped="Button_Tapped_4">Get Data</Button>
         </StackPanel>
     </Grid>
 </Page>

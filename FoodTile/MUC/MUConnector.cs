@@ -43,7 +43,7 @@ namespace MUC
         /// <summary>
         /// Login to MyUW
         /// </summary>
-        public async void Login()
+        public async Task<bool> Login()
         {
             const string LOGIN_URL = "https://weblogin.washington.edu/";
             const string GET_COOKIES_URL = "https://my.uw.edu/PubCookie.reply";
@@ -78,13 +78,30 @@ namespace MUC
 
             postContent = new FormUrlEncodedContent(postData);
             await client.PostAsync(GET_COOKIES_URL, postContent); // after this, we are logged in.
+
+            try
+            {
+                await GetHfsData(true);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
-        public async Task<UserHfsData> GetHfsData()
+        public async Task<UserHfsData> GetHfsData(bool fromLogin = false)
         {
             const string HFS_DATA_URL = "https://my.uw.edu/api/v1/hfs/";
-
+            
             var resp = await client.GetAsync(HFS_DATA_URL);
+
+            if (!resp.IsSuccessStatusCode && !fromLogin)
+            {
+                await Login();
+                resp = await client.GetAsync(HFS_DATA_URL);
+            }
+
             var raw = await resp.Content.ReadAsStreamAsync();
 
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(UserHfsData));
@@ -99,9 +116,9 @@ namespace MUC
         /// <returns>Value from specified name</returns>
         public static string GetValue(string name, string content)
         {
-            if (!name.Contains(name))
+            if (!content.Contains(name))
             {
-                return null;
+                return string.Empty;
             }
             int start = content.IndexOf($"name=\"{name}\"");
             string toReturn = content.Substring(start);
