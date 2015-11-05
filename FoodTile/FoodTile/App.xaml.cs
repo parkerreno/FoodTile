@@ -1,4 +1,5 @@
-﻿using FoodTile.Views;
+﻿using FoodTile.ViewModels;
+using FoodTile.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,6 +25,32 @@ namespace FoodTile
     /// </summary>
     sealed partial class App : Application
     {
+        private static MainViewModel _mainViewModel;
+        public static MainViewModel MainViewModel
+        {
+            get
+            {
+                if (_mainViewModel == null)
+                {
+                    _mainViewModel = new MainViewModel();
+                }
+                return _mainViewModel;
+            }
+        }
+
+        private static ResourceLoader _rl;
+        public static ResourceLoader RL
+        {
+            get
+            {
+                if (_rl == null)
+                {
+                    _rl = new ResourceLoader();
+                }
+                return _rl;
+            }
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

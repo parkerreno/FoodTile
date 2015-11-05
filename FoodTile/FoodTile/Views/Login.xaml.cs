@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using MUC;
+using System;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.UI.Popups;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,9 +20,23 @@ namespace FoodTile.Views
             this.InitializeComponent();
         }
 
-        private void SignIn_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void SignIn_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage));
+            var credential = new PasswordCredential(App.RL.GetString("CredResName"), usernameBox.Text, passwordBox.Password);
+            var connector = new MUConnector(credential);
+
+            if (await connector.Login())
+            {
+                App.MainViewModel.connector = connector;
+                PasswordVault vault = new PasswordVault();
+                vault.Add(credential);
+                await new MessageDialog("Login succeeded and added to vault").ShowAsync();
+                vault.Remove(credential);
+            }
+            else
+            {
+                await new MessageDialog(App.RL.GetString("LoginFailedMsg"), App.RL.GetString("LoginFailedTitle")).ShowAsync();
+            }
         }
 
         private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
