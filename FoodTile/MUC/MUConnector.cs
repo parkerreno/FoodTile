@@ -19,7 +19,7 @@ namespace MUC
         
         public MUConnector(PasswordCredential p)
         {
-            user = p.UserName;
+            user = p.UserName.ToLower(); //netid must be lowercase (yeah idk either)
             p.RetrievePassword();
             password = p.Password;
             InitClient();
@@ -49,7 +49,7 @@ namespace MUC
             const string GET_COOKIES_URL = "https://my.uw.edu/PubCookie.reply";
             
             var postData = new Dictionary<string, string>();
-            postData.Add("user", user); // Not all of these may be necessary, but this config is tested and works
+            postData.Add("user", user.ToLower()); // Not all of these may be necessary, but this config is tested and works
             postData.Add("pass", password);
             postData.Add("relay_url", GET_COOKIES_URL);
             postData.Add("create_ts", UnixTimeNow().ToString());
