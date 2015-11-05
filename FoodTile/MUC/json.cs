@@ -28,6 +28,25 @@ namespace MUC
         public string summer_term { get; set; }
         public int year { get; set; }
         public string quarter { get; set; }
+        public int FullDaysRemaining
+        {
+            get
+            {
+                var lastDay = DateTime.Parse(term.last_final_exam_date).Date;
+                var remaining = lastDay - DateTime.Now.Date;
+                return (int)remaining.TotalDays;
+            }
+        }
+
+        public double RealDaysRemaining
+        {
+            get
+            {
+                var lastDay = DateTime.Parse(term.last_final_exam_date);
+                var remaining = lastDay - DateTime.Now;
+                return remaining.TotalDays;
+            }
+        }
     }
 
     public class Term
