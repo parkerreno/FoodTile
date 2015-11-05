@@ -39,24 +39,26 @@ namespace FoodTile
 
         private void Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            var dining = App.MainViewModel.HfsData.resident_dining;
+            var term = App.MainViewModel.TermInfo;
             var bindingContent = new TileBindingContentAdaptive();
             var items = bindingContent.Children;
 
             items.Add(new TileText()
             {
-                Text = "Balance: $568.12",
-                Style = TileTextStyle.Subtitle
+                Text = $"Balance: ${dining.balance:0.00}",
+                Style = TileTextStyle.Body
             });
 
             items.Add(new TileText()
             {
-                Text = "Days: 47",
+                Text = $"Days: {term.FullDaysRemaining}",
                 Style = TileTextStyle.Caption
             });
 
             items.Add(new TileText()
             {
-                Text = "Avg/Day: $12.42",
+                Text = $"Avg/Day: ${dining.balance/term.FullDaysRemaining:0.00}",
                 Style = TileTextStyle.Caption
             });
 
@@ -70,6 +72,7 @@ namespace FoodTile
             {
                 Visual = new TileVisual()
                 {
+                    TileSmall = tileBinding,
                     TileMedium = tileBinding,
                     TileWide = tileBinding,
                     TileLarge = tileBinding
@@ -142,32 +145,15 @@ namespace FoodTile
 
             return false;
         }
-
-        private async void Button_Tapped_3(object sender, TappedRoutedEventArgs e)
-        {
-            if (connector != null)
-            {
-                connector.Dispose();
-                connector = null;
-            }
-            PasswordCredential c = new PasswordCredential("myuw", UserName.Text, Password.Password);
-            connector = new MUConnector(c);
-            bool success = await connector.Login();
-
-            await new MessageDialog($"Login success: {success}", "Login Status").ShowAsync();
-        }
-
+        
         private async void Button_Tapped_4(object sender, TappedRoutedEventArgs e)
         {
-            var data = await connector.GetHfsData();
-            var termInfo = await connector.GetTermInfo();
+            await App.MainViewModel.GetData();
 
-            var lastDay = DateTime.Parse(termInfo.term.last_final_exam_date).Date;
-            var daysRemaining = lastDay - DateTime.Now.Date;
+            var huskyCard = App.MainViewModel.HfsData.resident_dining;
+            var term = App.MainViewModel.TermInfo;
 
-            double average = data.resident_dining.balance / daysRemaining.TotalDays;
-
-            var md = new MessageDialog($"${data.resident_dining.balance:0.00} Dining Balance. \n{daysRemaining.TotalDays} days remaining. ${average:0.00} average spend");
+            var md = new MessageDialog($"${huskyCard.balance:0.00} Dining Balance. \n{term.FullDaysRemaining} days remaining. ${huskyCard.balance/term.FullDaysRemaining:0.00} average spend");
             await md.ShowAsync();
         }
     }

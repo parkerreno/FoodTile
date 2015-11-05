@@ -41,16 +41,29 @@ namespace FoodTile.Views
 
         private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ResourceLoader rl = new ResourceLoader();
-            var dialog = new MessageDialog(rl.GetString("SingleUseWarning"), "Are You Sure?");
-            dialog.Commands.Add(new UICommand("I'm Sure"));
-            dialog.Commands.Add(new UICommand("Cancel"));
-            var result = await dialog.ShowAsync();
+            var credential = new PasswordCredential(App.RL.GetString("CredResName"), usernameBox.Text, passwordBox.Password);
+            var connector = new MUConnector(credential);
 
-            if (result.Label == "I'm Sure")
+            if (await connector.Login())
             {
-                Frame.Navigate(typeof(MainPage));
+                App.MainViewModel.connector = connector;
+                ResourceLoader rl = App.RL;
+                var dialog = new MessageDialog(rl.GetString("SingleUseWarning"), "Are You Sure?");
+                dialog.Commands.Add(new UICommand("I'm Sure"));
+                dialog.Commands.Add(new UICommand("Save Login"));
+                var result = await dialog.ShowAsync();
+
+                if (result.Label == "I'm Sure")
+                {
+                    Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    //TODO: Implement saving from this dialog
+                }
             }
+
+            
         }
     }
 }
