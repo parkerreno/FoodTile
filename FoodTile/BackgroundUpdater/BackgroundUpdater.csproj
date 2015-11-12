@@ -111,6 +111,12 @@
     <Compile Include="BalanceCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MUC\MUC.csproj">
+      <Project>{49b969e5-a322-41b4-9012-145e6288609a}</Project>
+      <Name>MUC</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

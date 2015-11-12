@@ -45,6 +45,10 @@ namespace MUC
         /// </summary>
         public async Task<bool> Login()
         {
+            if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
+            {
+                return false;
+            }
             const string LOGIN_URL = "https://weblogin.washington.edu/";
             const string GET_COOKIES_URL = "https://my.uw.edu/PubCookie.reply";
             

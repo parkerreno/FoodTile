@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using NotificationsExtensions.Tiles;
 using NotificationsExtensions.Toasts;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Windows.ApplicationModel.Background;
-using MUC;
-using Windows.Security.Credentials;
 using Windows.UI.Popups;
 
 
@@ -31,10 +18,10 @@ namespace FoodTile
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MUConnector connector;
         public MainPage()
         {
             this.InitializeComponent();
+            
         }
 
         private void Button_Tapped(object sender, TappedRoutedEventArgs e)

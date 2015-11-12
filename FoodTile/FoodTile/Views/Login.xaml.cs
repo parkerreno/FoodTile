@@ -22,6 +22,12 @@ namespace FoodTile.Views
 
         private async void SignIn_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(usernameBox.Text) || string.IsNullOrWhiteSpace(passwordBox.Password))
+            {
+                EmptyField();
+                return;
+            }
+
             var credential = new PasswordCredential(App.RL.GetString("CredResName"), usernameBox.Text, passwordBox.Password);
             var connector = new MUConnector(credential);
 
@@ -41,6 +47,12 @@ namespace FoodTile.Views
 
         private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(usernameBox.Text) || string.IsNullOrWhiteSpace(passwordBox.Password))
+            {
+                EmptyField();
+                return;
+            }
+
             var credential = new PasswordCredential(App.RL.GetString("CredResName"), usernameBox.Text, passwordBox.Password);
             var connector = new MUConnector(credential);
 
@@ -61,9 +73,12 @@ namespace FoodTile.Views
                 {
                     //TODO: Implement saving from this dialog
                 }
-            }
+            }            
+        }
 
-            
+        private async void EmptyField()
+        {
+            await new MessageDialog("Your username/password cannot be empty", "Login Failed").ShowAsync();
         }
     }
 }
