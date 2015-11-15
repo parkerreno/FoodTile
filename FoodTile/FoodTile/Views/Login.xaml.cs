@@ -5,6 +5,7 @@ using Windows.Security.Credentials;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -18,6 +19,11 @@ namespace FoodTile.Views
         public Login()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
         }
 
         private async void SignIn_Tapped(object sender, TappedRoutedEventArgs e)
