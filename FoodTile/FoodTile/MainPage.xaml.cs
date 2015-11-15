@@ -149,8 +149,8 @@ namespace FoodTile
         {
             var appdata = ApplicationData.Current.LocalSettings;
             var lastValue = (double)(appdata.Values["LastValue"]??5.0);
-            bool toast = (bool)(appdata.Values["TilesUpdates"] ?? false);
-            new MessageDialog($"tiles {toast}").ShowAsync() ;
+            bool tiles = (bool)(appdata.Values["TileUpdates"] ?? false);
+            new MessageDialog($"tiles {tiles}").ShowAsync() ;
         }
 
         private void ToggleSwitch_Toggled(object sender, Windows.UI.Xaml.RoutedEventArgs e)
