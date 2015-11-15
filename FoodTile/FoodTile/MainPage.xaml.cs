@@ -7,6 +7,7 @@ using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Popups;
+using Windows.Storage;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -142,6 +143,28 @@ namespace FoodTile
 
             var md = new MessageDialog($"${huskyCard.balance:0.00} Dining Balance. \n{term.FullDaysRemaining} days remaining. ${huskyCard.balance/term.FullDaysRemaining:0.00} average spend");
             await md.ShowAsync();
+        }
+
+        private void Button_Tapped_3(object sender, TappedRoutedEventArgs e)
+        {
+            var appdata = ApplicationData.Current.LocalSettings;
+            var lastValue = (double)(appdata.Values["LastValue"]??5.0);
+            bool toast = (bool)(appdata.Values["TilesUpdates"] ?? false);
+            new MessageDialog($"tiles {toast}").ShowAsync() ;
+        }
+
+        private void ToggleSwitch_Toggled(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var toggle = sender as ToggleSwitch;
+            var appdata = ApplicationData.Current.LocalSettings.Values;
+            appdata["UseToasts"] =  toggle.IsOn;
+        }
+
+        private void ToggleSwitch_Toggled_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var toggle = sender as ToggleSwitch;
+            var appdata = ApplicationData.Current.LocalSettings.Values;
+            appdata["TileUpdates"] = toggle.IsOn;
         }
     }
 }

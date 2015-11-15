@@ -11,30 +11,43 @@
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/Quad.jpg"/>
         </Grid.Background>
-        <Grid >
+        <Grid x:Name="ContentGrid">
             <Grid.Background>
                 <SolidColorBrush Color="White" Opacity=".7"/>
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="textBlock" Grid.Row="1" TextWrapping="Wrap" Text="Welcome to FoodTile" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
-            <StackPanel Grid.Row="2" Padding="0" Margin="12,0" MaxWidth="400">
-                <TextBox x:Name="usernameBox" Margin="0,0,0,12" PlaceholderText="NetID" BorderBrush="#FF917B4C"/>
-                <PasswordBox x:Name="passwordBox" PlaceholderText="Password" BorderBrush="#FF917B4C"/>
+            <StackPanel Grid.Row="1" x:Name="LoadingPanel" Visibility="Collapsed">
+                <ProgressRing IsActive="True" Width="50" Height="50" Margin="0,0,0,12">
+                    <ProgressRing.Foreground>
+                        <SolidColorBrush Color="{StaticResource UwPurple}"/>
+                    </ProgressRing.Foreground>
+                </ProgressRing>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center">loading...</TextBlock>
             </StackPanel>
-            <Grid Grid.Row="3" Margin="12,12,12,0" MaxWidth="400">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Stretch" Grid.Column="0" Margin="0,0,6,0" Background="#7F33006F" Foreground="White" Tapped="SignIn_Tapped">Save Sign In</Button>
-                <Button HorizontalAlignment="Stretch" Grid.Column="1" Margin="6,0,0,0" Background="#7F33006F" Foreground="White" Tapped="SingleSignIn_Tapped">Single Sign In</Button>
-            </Grid>
+            <StackPanel Grid.Row="1" x:Name="LoginPanel" Visibility="Visible">
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Welcome to FoodTile" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                <StackPanel Padding="0" Margin="12,0" MaxWidth="400">
+                    <TextBox x:Name="usernameBox" Margin="0,0,0,12" PlaceholderText="NetID" BorderBrush="#FF917B4C"/>
+                    <PasswordBox x:Name="passwordBox" PlaceholderText="Password">
+                        <PasswordBox.BorderBrush>
+                            <SolidColorBrush Color="{StaticResource UwGold}"/>
+                        </PasswordBox.BorderBrush>
+                    </PasswordBox>
+                </StackPanel>
+                <Grid Margin="12,12,12,0" MaxWidth="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button HorizontalAlignment="Stretch" Grid.Column="0" Margin="0,0,6,0" Background="#7F33006F" Foreground="White" Tapped="SignIn_Tapped">Save Sign In</Button>
+                    <Button HorizontalAlignment="Stretch" Grid.Column="1" Margin="6,0,0,0" Background="#7F33006F" Foreground="White" Tapped="SingleSignIn_Tapped">Single Sign In</Button>
+                </Grid>
+            </StackPanel>
+
         </Grid>
-    </Grid>    
+    </Grid>
 </Page>

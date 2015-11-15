@@ -13,6 +13,10 @@
             <Button Tapped="Button_Tapped_1">Send Notification</Button>
             <Button Tapped="Button_Tapped_2">Register Background Task</Button>
             <Button Tapped="Button_Tapped_4">Get Data</Button>
+            <Button Tapped="Button_Tapped_3">Get Value</Button>
+
+            <ToggleSwitch Toggled="ToggleSwitch_Toggled" Header="Toast Notifications"></ToggleSwitch>
+            <ToggleSwitch Toggled="ToggleSwitch_Toggled_1" Header="Tile Updates"></ToggleSwitch>
         </StackPanel>
     </Grid>
 </Page>

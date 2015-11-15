@@ -4,5 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FoodTile"
     RequestedTheme="Light">
+    <Application.Resources>
+        <Color x:Key="UwPurple">#FF33006F</Color>
+        <Color x:Key="UwGold">#FF917B4C</Color>
+    </Application.Resources>
 
 </Application>

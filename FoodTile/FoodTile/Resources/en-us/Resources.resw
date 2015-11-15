@@ -127,6 +127,12 @@
   <data name="LoginFailedTitle" xml:space="preserve">
     <value>Login Failed</value>
   </data>
+  <data name="SavedLoginFailMsg" xml:space="preserve">
+    <value>Make sure you are connected to the internet, then login again.  If you have recently changed your password, you will need to enter your updated credentials.  The failed login information is no longer being saved. </value>
+  </data>
+  <data name="SavedLoginFailTitle" xml:space="preserve">
+    <value>Saved Login Failed</value>
+  </data>
   <data name="SingleUseWarning" xml:space="preserve">
     <value>If you use the single-use sign in, you will only be able to view your data for this session.  You will not be able to use the updating tile or get notifications about your account.  
 Your password is saved securely in the Windows credential storage if you do save your details and is not transmitted to any service besides the MyUW servers.</value>

@@ -1,11 +1,13 @@
 ﻿using MUC;
 using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel.Resources;
 using Windows.Security.Credentials;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using System.Linq;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,8 +23,34 @@ namespace FoodTile.Views
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            PasswordVault vault = new PasswordVault();
+            try
+            {
+                var creds = vault.FindAllByResource(App.RL.GetString("CredResName"));
+                if (creds.Count > 0)
+                {
+                    SetLoading();
+                    var connector = new MUConnector(creds.First());
+                    if (await connector.Login())
+                    {
+                        App.MainViewModel.connector = connector;
+                        Frame.Navigate(typeof(MainPage));
+                    }
+                    else
+                    {
+                        vault.Remove(creds.First());
+                        await new MessageDialog(App.RL.GetString("SavedLoginFailMsg"), App.RL.GetString("SavedLoginFailTitle")).ShowAsync();
+                    }
+                    UnsetLoading();
+                }
+            }
+            catch
+            {
+                //Used to handle the case when no credentials are found - safe to move on
+            }
+
             base.OnNavigatedTo(e);
         }
 
@@ -34,21 +62,21 @@ namespace FoodTile.Views
                 return;
             }
 
+            SetLoading();
+
             var credential = new PasswordCredential(App.RL.GetString("CredResName"), usernameBox.Text, passwordBox.Password);
             var connector = new MUConnector(credential);
 
             if (await connector.Login())
             {
-                App.MainViewModel.connector = connector;
-                PasswordVault vault = new PasswordVault();
-                vault.Add(credential);
-                await new MessageDialog("Login succeeded and added to vault").ShowAsync();
-                vault.Remove(credential);
+                SaveAndLogin(credential, connector);
             }
             else
             {
                 await new MessageDialog(App.RL.GetString("LoginFailedMsg"), App.RL.GetString("LoginFailedTitle")).ShowAsync();
             }
+
+            UnsetLoading();
         }
 
         private async void SingleSignIn_Tapped(object sender, TappedRoutedEventArgs e)
@@ -77,14 +105,34 @@ namespace FoodTile.Views
                 }
                 else
                 {
-                    //TODO: Implement saving from this dialog
+                    SaveAndLogin(credential, connector);
                 }
-            }            
+            }
         }
 
         private async void EmptyField()
         {
             await new MessageDialog("Your username/password cannot be empty", "Login Failed").ShowAsync();
+        }
+
+        private void SetLoading()
+        {
+            LoginPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            LoadingPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void UnsetLoading()
+        {
+            LoadingPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            LoginPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void SaveAndLogin(PasswordCredential cred, MUConnector connector)
+        {
+            App.MainViewModel.connector = connector;
+            PasswordVault vault = new PasswordVault();
+            vault.Add(cred);
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }
