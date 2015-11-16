@@ -138,12 +138,7 @@ namespace BackgroundUpdater
                     appdata.Values["LastValue"] = hfs.resident_dining.balance;
                 }
             }
-            else
-            {
-                _defferal.Complete();
-                return;
-            }
-
+            connector.Dispose();
             _defferal.Complete();
         }
     }
