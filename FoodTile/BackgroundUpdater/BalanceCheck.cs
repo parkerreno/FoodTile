@@ -36,7 +36,11 @@ namespace BackgroundUpdater
             if (await connector.Login())
             {
                 var appdata = ApplicationData.Current.LocalSettings;
-                double lastValue = (double)(appdata.Values["LastValue"] ?? -1.0);
+                double lastValue = -1;
+                if (appdata.Values.ContainsKey("LastValue"))
+                {
+                    lastValue = (double)appdata.Values["LastValue"];
+                }
                 var hfs = await connector.GetHfsData();
                 var term = await connector.GetTermInfo();
 

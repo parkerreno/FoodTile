@@ -148,7 +148,6 @@ namespace FoodTile
         private void Button_Tapped_3(object sender, TappedRoutedEventArgs e)
         {
             var appdata = ApplicationData.Current.LocalSettings;
-            var lastValue = (double)(appdata.Values["LastValue"]??5.0);
             bool tiles = (bool)(appdata.Values["TileUpdates"] ?? false);
             new MessageDialog($"tiles {tiles}").ShowAsync() ;
         }
