@@ -36,10 +36,14 @@ namespace BackgroundUpdater
             if (await connector.Login())
             {
                 var appdata = ApplicationData.Current.LocalSettings;
-                double lastValue = -1;
+                //double lastValue = (float)(appdata.Values["LastValue"] ?? -1); //shit's stored as a float...  avoids invalid cast
+
+                float lastValue = -1;
+
                 if (appdata.Values.ContainsKey("LastValue"))
                 {
-                    lastValue = (double)appdata.Values["LastValue"];
+                    float? lv = appdata.Values["LastValue"] as float?; // stupid workarounds for float precision
+                    lastValue = lv.Value;
                 }
                 var hfs = await connector.GetHfsData();
                 var term = await connector.GetTermInfo();
