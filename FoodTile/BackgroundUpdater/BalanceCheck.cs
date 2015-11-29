@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using NotificationsExtensions.Toasts;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 using Windows.Security.Credentials;
 using Windows.Storage;
-using Windows.ApplicationModel.Resources;
 using MUC;
 using NotificationsExtensions.Tiles;
 
@@ -19,7 +14,6 @@ namespace BackgroundUpdater
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral _defferal = taskInstance.GetDeferral();
-
             PasswordVault vault = new PasswordVault();
             PasswordCredential cred;
             try
