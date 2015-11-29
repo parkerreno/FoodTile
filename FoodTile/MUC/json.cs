@@ -38,7 +38,39 @@ namespace MUC
             }
         }
 
-        public double RealDaysRemaining
+        public int AdjustedDaysRemaining(IList<DateTime> toRemove)
+        {
+            for (int i = 0; i < toRemove.Count; i++)
+            {
+                for (int j = 0; j < toRemove.Count; j++)
+                {
+                    if(j!= i && toRemove[i].Date.Equals(toRemove[j].Date))
+                        toRemove[j]= new DateTime(0);
+                }
+            }
+
+            int count = toRemove.Count(IsInCurrentTerm);
+
+            return FullDaysRemaining - count;
+        }
+
+        /// <summary>
+        /// Checks if the date is between now and end of quarter
+        /// </summary>
+        /// <param name="date">Date to check</param>
+        /// <returns></returns>
+        private bool IsInCurrentTerm(DateTime date)
+        {
+            var endTicks = DateTime.Parse(term.last_final_exam_date).Ticks;
+            var nowTicks = DateTime.Now.Ticks;
+            if (date.Ticks > nowTicks && date.Ticks < endTicks)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public double TrueDaysRemaining
         {
             get
             {

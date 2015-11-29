@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using NotificationsExtensions.Tiles;
@@ -19,6 +20,7 @@ namespace FoodTile
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private List<DateTime> _dates = new List<DateTime>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -143,6 +145,10 @@ namespace FoodTile
 
             var md = new MessageDialog($"${huskyCard.balance:0.00} Dining Balance. \n{term.FullDaysRemaining} days remaining. ${huskyCard.balance/term.FullDaysRemaining:0.00} average spend");
             await md.ShowAsync();
+
+            await
+                new MessageDialog(
+                    $"Average adjusted for selected days: ${huskyCard.balance/term.AdjustedDaysRemaining(_dates)}. {term.AdjustedDaysRemaining(_dates)} adjusted days remaining.").ShowAsync();
         }
 
         private void Button_Tapped_3(object sender, TappedRoutedEventArgs e)
@@ -169,6 +175,12 @@ namespace FoodTile
         private void StartApp_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof (Views.MainPage));
+        }
+
+        private void AddDate_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var date = DatePicker.Date.DateTime;
+            _dates.Add(date);
         }
     }
 }

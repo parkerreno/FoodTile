@@ -18,6 +18,9 @@
 
             <ToggleSwitch Toggled="ToggleSwitch_Toggled" Header="Toast Notifications"></ToggleSwitch>
             <ToggleSwitch Toggled="ToggleSwitch_Toggled_1" Header="Tile Updates"></ToggleSwitch>
+            
+            <DatePicker x:Name="DatePicker"></DatePicker>
+            <Button Tapped="AddDate_Tapped">Add Date Adjustment</Button>
         </StackPanel>
     </Grid>
 </Page>
