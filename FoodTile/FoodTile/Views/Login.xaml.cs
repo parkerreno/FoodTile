@@ -23,7 +23,7 @@ namespace FoodTile.Views
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             PasswordVault vault = new PasswordVault();
             try
@@ -36,7 +36,7 @@ namespace FoodTile.Views
                     if (await connector.Login())
                     {
                         App.MainViewModel.connector = connector;
-                        Frame.Navigate(typeof(MainPage));
+                        Frame.Navigate(typeof(FoodTile.MainPage));
                     }
                     else
                     {

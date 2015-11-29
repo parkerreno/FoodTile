@@ -165,5 +165,10 @@ namespace FoodTile
             var appdata = ApplicationData.Current.LocalSettings.Values;
             appdata["TileUpdates"] = toggle.IsOn;
         }
+
+        private void StartApp_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (Views.MainPage));
+        }
     }
 }
