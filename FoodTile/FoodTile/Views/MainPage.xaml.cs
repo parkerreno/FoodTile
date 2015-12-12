@@ -26,5 +26,10 @@ namespace FoodTile.Views
         {
             this.InitializeComponent();
         }
+
+        private void Adjust_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (Adjust));
+        }
     }
 }

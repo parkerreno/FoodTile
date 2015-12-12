@@ -12,25 +12,11 @@
                 <AppBarButton Label="Settings"/>
                 <AppBarButton Label="About"/>
             </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="Filter" Label="Adjust"/>
+            <AppBarButton Icon="Filter" Label="Adjust" Tapped="Adjust_Tapped"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Popup IsOpen="True" IsLightDismissEnabled="True">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock>Tap to remove adjustments</TextBlock>
-                <CommandBar Grid.Row="2">
-                    <CommandBar.PrimaryCommands>
-                        <AppBarButton Icon="Add" Label="Add"></AppBarButton>
-                    </CommandBar.PrimaryCommands>
-                </CommandBar>
-            </Grid>
-        </Popup>
+    
     </Grid>
 </Page>
