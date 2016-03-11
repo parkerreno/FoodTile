@@ -17,6 +17,29 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    
+        <StackPanel Margin="12">
+            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+            You have
+            </TextBlock>
+            <TextBlock x:Name="TotalBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                loading...
+            </TextBlock>
+
+            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+            So you can spend
+            </TextBlock>
+            <TextBlock x:Name="AvgSpendBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                loading...
+            </TextBlock>
+            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+            Over the next
+            </TextBlock>
+            <TextBlock x:Name="DaysBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                0 days
+            </TextBlock>
+            <TextBlock  Style="{ThemeResource BodyTextBlockStyle}">
+              
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Page>
