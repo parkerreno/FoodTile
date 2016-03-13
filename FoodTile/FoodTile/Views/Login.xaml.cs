@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using System.Linq;
+using Windows.Security.Credentials.UI;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,17 +34,52 @@ namespace FoodTile.Views
                 if (creds.Count > 0)
                 {
                     SetLoading();
+
+                    var idVerificationPossible = await UserConsentVerifier.CheckAvailabilityAsync();
+                    var localSettings = ApplicationData.Current.LocalSettings.Values;
+
+                    bool goodToGo = true;
+
+                    if (idVerificationPossible == UserConsentVerifierAvailability.Available && (bool)(localSettings[App.RL.GetString("VerifyIdSettingString")] ?? false))
+                    {
+                        var verified =
+                            await
+                                UserConsentVerifier.RequestVerificationAsync(
+                                    "Just need to double check that it's you before we login :)");
+                        goodToGo = verified == UserConsentVerificationResult.Verified;
+
+                        if (verified == UserConsentVerificationResult.RetriesExhausted)
+                        {
+                            foreach (var cred in creds)
+                            {
+                                vault.Remove(cred);
+                            }
+                            await
+                                new MessageDialog("For your safety, we've removed your saved login data.",
+                                    "Too Many Failed Attempts").ShowAsync();
+                        }
+
+                        if (!goodToGo)
+                        {
+                            await new MessageDialog("Because you enabled identity verification, you will not be able to start the app without verification.","We Couldn't Verify Your Identity").ShowAsync();
+                            App.Current.Exit();
+                        }
+                    }
+
                     var connector = new MUConnector(creds.First());
                     if (await connector.Login())
                     {
                         App.MainViewModel.connector = connector;
-                        Frame.Navigate(typeof(FoodTile.MainPage));
+                        App.MainViewModel.SignOnSaved = true;
+                        Frame.Navigate(typeof(FoodTile.Views.MainPage));
                     }
                     else
                     {
                         vault.Remove(creds.First());
                         await new MessageDialog(App.RL.GetString("SavedLoginFailMsg"), App.RL.GetString("SavedLoginFailTitle")).ShowAsync();
                     }
+
+
                     UnsetLoading();
                 }
             }
@@ -101,7 +138,7 @@ namespace FoodTile.Views
 
                 if (result.Label == "I'm Sure")
                 {
-                    Frame.Navigate(typeof(MainPage));
+                    Frame.Navigate(typeof(FoodTile.Views.MainPage));
                 }
                 else
                 {
@@ -132,7 +169,8 @@ namespace FoodTile.Views
             App.MainViewModel.connector = connector;
             PasswordVault vault = new PasswordVault();
             vault.Add(cred);
-            Frame.Navigate(typeof(MainPage));
+            App.MainViewModel.SignOnSaved = true;
+            Frame.Navigate(typeof(FoodTile.Views.MainPage));
         }
     }
 }

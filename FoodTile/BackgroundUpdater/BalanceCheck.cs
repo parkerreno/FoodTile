@@ -14,6 +14,13 @@ namespace BackgroundUpdater
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral _defferal = taskInstance.GetDeferral();
+            var appdata = ApplicationData.Current.LocalSettings;
+            if (!(bool) (appdata.Values["TileUpdates"] ?? false) && !(bool) (appdata.Values["UseToasts"] ?? false)) // if task isn't needed, kill it
+            {
+                _defferal.Complete();
+                return;
+            }
+
             PasswordVault vault = new PasswordVault();
             PasswordCredential cred;
             try
@@ -29,7 +36,7 @@ namespace BackgroundUpdater
             var connector = new MUConnector(cred);
             if (await connector.Login())
             {
-                var appdata = ApplicationData.Current.LocalSettings;
+                
                 //double lastValue = (float)(appdata.Values["LastValue"] ?? -1); //shit's stored as a float...  avoids invalid cast
 
                 float lastValue = -1;

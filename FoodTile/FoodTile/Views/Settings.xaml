@@ -6,8 +6,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar/>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot x:Name="Pivot" Title="FoodTile">
+            <PivotItem Header="Settings" Margin="12">
+                <StackPanel>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}" FontStyle="Italic" Margin="0,0,0,12">These settings will only be available if you have saved your credentials.</TextBlock>
+                    <ToggleSwitch x:Name="LiveTileToggle" Header="Live Tile" Toggled="LiveTileToggle_OnToggled"></ToggleSwitch>
+                    <ToggleSwitch x:Name="NotificationsToggle" Header="Notifications" Toggled="NotificationsToggle_OnToggled"></ToggleSwitch>
+                    <ToggleSwitch x:Name="VerifyIdToggle" Header="Verify Identity on Launch" Toggled="VerifyIdToggle_OnToggled"></ToggleSwitch>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,12,0,0">Want to remove your saved credentials and exit the app?</TextBlock>
+                    <Button Margin="0,12,0,0" Tapped="LogOut_Tapped">Log Out</Button>
+                </StackPanel>
+            </PivotItem>
 
+            <PivotItem Header="About">
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource BodyTextBlockStyle}" Tapped="Debug_Tapped" Margin="0,0,0,12">
+                            You're using FoodTile vBETA_UNRELEASED.
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource BodyTextBlockStyle}" Tapped="Email_Tapped" Margin="0,0,0,12">
+                            Need to report a bug/ give feedback?  Send an email to apps@parkerreno.net!
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource BodyTextBlockStyle}" Tapped="Donate_Tapped" Margin="0,0,0,12">
+                            Enjoy this app and want to help fund development?  Tap here.
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

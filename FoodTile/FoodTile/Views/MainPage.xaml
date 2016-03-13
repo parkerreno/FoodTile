@@ -9,10 +9,12 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Settings"/>
-                <AppBarButton Label="About"/>
+                <AppBarButton Label="Settings" Tapped="Settings_Tapped"/>
+                <AppBarButton Label="About" Tapped="About_Tapped"/>
             </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="Filter" Label="Adjust" Tapped="Adjust_Tapped"/>
+            <AppBarButton Icon="Filter" Label="Adjust" Tapped="Adjust_Tapped" IsEnabled="False"/>
+            <AppBarButton Icon="OutlineStar" Label="Review" Tapped="Review_Tapped"></AppBarButton>
+            <AppBarButton Icon="Refresh" Label="Refresh" Tapped="Refresh_Tapped"/>
         </CommandBar>
     </Page.BottomAppBar>
 

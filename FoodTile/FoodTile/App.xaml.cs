@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -64,6 +65,17 @@ namespace FoodTile
             this.Suspending += OnSuspending;
         }
 
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            var frame = Window.Current.Content as Frame;
+
+            if (frame.CanGoBack)
+            {
+                e.Handled = true;
+                frame.GoBack();
+            }
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -88,7 +100,14 @@ namespace FoodTile
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
+                rootFrame.Navigated += OnNavigated;
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;  // Handle back requests
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                rootFrame.CanGoBack ?
+                AppViewBackButtonVisibility.Visible :
+                AppViewBackButtonVisibility.Collapsed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -108,6 +127,14 @@ namespace FoodTile
             }
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        private void OnNavigated(object sender, NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+            ((Frame)sender).CanGoBack ?
+            AppViewBackButtonVisibility.Visible :
+            AppViewBackButtonVisibility.Collapsed; // Update back button
         }
 
         /// <summary>

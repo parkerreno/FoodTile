@@ -67,6 +67,11 @@ namespace FoodTile.ViewModels
             
         }
 
+        /// <summary>
+        /// Are credentials saved in the vault?
+        /// </summary>
+        public bool SignOnSaved { get; set; } = false;
+
         #region boilerplate inpc code
         /// <summary>
         /// Raised when a property notifies that it has changed in this class

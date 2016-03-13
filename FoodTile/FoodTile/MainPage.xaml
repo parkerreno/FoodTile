@@ -9,6 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
+            <TextBlock FontStyle="Italic" Foreground="Red" TextWrapping="WrapWholeWords">This is a debug menu and not intended for consumer use.</TextBlock>
             <Button Tapped="Button_Tapped">UPDATE TILE!</Button>
             <Button Tapped="Button_Tapped_1">Send Notification</Button>
             <Button Tapped="Button_Tapped_2">Register Background Task</Button>
