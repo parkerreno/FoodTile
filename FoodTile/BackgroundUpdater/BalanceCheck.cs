@@ -60,25 +60,25 @@ namespace BackgroundUpdater
 
                     medItems.Add(new TileText()
                     {
-                        Text = $"Balance ${hfs.resident_dining.balance:0.00}",
+                        Text = $"${hfs.resident_dining.balance:0.00} remaining",
                         Style = TileTextStyle.Body
                     });
 
                     items.Add(new TileText()
                     {
-                        Text = $"Balance ${hfs.resident_dining.balance:0.00}",
+                        Text = $"${hfs.resident_dining.balance:0.00} remaining",
                         Style = TileTextStyle.Subtitle
                     });
 
                     var line2 = new TileText()
                     {
-                        Text = $"{term.FullDaysRemaining} Days",
+                        Text = $"{term.FullDaysRemaining} days",
                         Style = TileTextStyle.Caption
                     };
 
                     var line3 = new TileText()
-                    {
-                        Text = $"Average ${average:0.00}",
+                    {            
+                        Text = $"${average:0.00} per day",
                         Style = TileTextStyle.Caption
                     };
 
