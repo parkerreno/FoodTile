@@ -47,7 +47,7 @@ namespace FoodTile.Views
             if ((App.MainViewModel.HfsData!=null && !force)||await App.MainViewModel.GetData())
             {
                 TotalBlock.Text = $"{App.MainViewModel.HfsData.resident_dining.balance:C}";
-                AvgSpendBlock.Text = $"{App.MainViewModel.AverageSpend:C}";
+                AvgSpendBlock.Text = $"{App.MainViewModel.AverageSpend:C} per day";
                 DaysBlock.Text = $"{App.MainViewModel.TermInfo.FullDaysRemaining} days";
             }
             else
