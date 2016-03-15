@@ -2,7 +2,7 @@
 
 FoodTile allows you to access your dining account information from your UW HFS account.  
 
-Features:
+###Features:
 - Optionally saves login information in the Windows password vault (syncs securely across devices)
 - Live Tile to keep you updated (must save login)
 - Notifications on balance change
