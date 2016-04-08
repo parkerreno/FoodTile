@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -30,17 +31,45 @@ namespace FoodTile.Views
         public Adjust()
         {
             this.InitializeComponent();
-            var settings = ApplicationData.Current.RoamingSettings.Values;
-            var list = (List<DateTime>)settings["AdjustedDates"]??new List<DateTime>();
-            _dates = new ObservableCollection<DateTime>(list);
+            
+            _dates = LoadSavedDates();
             _dates.CollectionChanged += _dates_CollectionChanged;
+            DatesListView.ItemsSource = _dates;
+        }
+
+        private ObservableCollection<DateTime> LoadSavedDates()
+        {
+            var settings = ApplicationData.Current.RoamingSettings.Values;
+            if (settings["AdjustedDates"] == null)
+            {
+                return new ObservableCollection<DateTime>();
+            }
+            else
+            {
+                var rawString = settings["AdjustedDates"] as string;
+                var stringDates = rawString.Split('\n');
+                ObservableCollection<DateTime> toReturn = new ObservableCollection<DateTime>();
+
+                DateTime toAdd;
+                foreach (var stringDate in stringDates)
+                {
+                    if (DateTime.TryParse(stringDate, out toAdd))
+                        toReturn.Add(toAdd);
+                }
+
+                return toReturn;
+            }
         }
 
         private void _dates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var settings = ApplicationData.Current.RoamingSettings.Values;
-            
-            settings["AdjustedDates"] = _dates.ToArray(); //TODO: Make this actually work (needs serialization to string)
+            var sb = new StringBuilder();
+            foreach (var date in _dates)
+            {
+                sb.AppendLine(date.ToString());
+            }
+            settings["AdjustedDates"] = sb.ToString();
         }
 
         private void AddDate_Tapped(object sender, TappedRoutedEventArgs e)

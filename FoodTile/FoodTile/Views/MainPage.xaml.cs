@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -29,9 +30,24 @@ namespace FoodTile.Views
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             Frame.BackStack.Clear(); //clear the backstack to remove the back button
+            if (ApplicationData.Current.LocalSettings.Values[App.RL.GetString("TileSettingString")] == null)
+            {
+                var md = new MessageDialog(
+                    "You can enable the live tile and notifications now, or you can change these in settings at any time.",
+                    "Enable Live Tile?");
+                md.Commands.Clear();
+                md.Commands.Add(new UICommand("Yes"));
+                md.Commands.Add(new UICommand("Later"));
+
+                var result = await md.ShowAsync();
+                if (result.Label == "Yes")
+                {
+                    Frame.Navigate(typeof (Views.Settings));
+                }
+            }
             UpdateData();
             base.OnNavigatedTo(e);
         }
