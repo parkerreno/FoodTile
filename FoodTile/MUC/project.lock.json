@@ -1,9 +1,10 @@
 {
   "locked": false,
-  "version": 1,
+  "version": 2,
   "targets": {
     ".NETCore,Version=v4.5.1": {
       "System.Net.Http/4.0.0": {
+        "type": "package",
         "compile": {
           "ref/win8/_._": {}
         },
@@ -18,6 +19,7 @@
       "sha512": "mZuAl7jw/mFY8jUq4ITKECxVBh9a8SJt9BC/+lJbmo7cRKspxE3PsITz+KiaCEsexN5WYPzwBOx0oJH/0HlPyQ==",
       "type": "Package",
       "files": [
+        "System.Net.Http.nuspec",
         "[Content_Types].xml",
         "_rels/.rels",
         "lib/DNXCore50/System.Net.Http.dll",
@@ -26,6 +28,8 @@
         "lib/win8/_._",
         "lib/wpa81/_._",
         "package/services/metadata/core-properties/62d64206d25643df9c8d01e867c05e27.psmdcp",
+        "ref/dotnet/System.Net.Http.dll",
+        "ref/dotnet/System.Net.Http.xml",
         "ref/dotnet/de/System.Net.Http.xml",
         "ref/dotnet/es/System.Net.Http.xml",
         "ref/dotnet/fr/System.Net.Http.xml",
@@ -33,16 +37,13 @@
         "ref/dotnet/ja/System.Net.Http.xml",
         "ref/dotnet/ko/System.Net.Http.xml",
         "ref/dotnet/ru/System.Net.Http.xml",
-        "ref/dotnet/System.Net.Http.dll",
-        "ref/dotnet/System.Net.Http.xml",
         "ref/dotnet/zh-hans/System.Net.Http.xml",
         "ref/dotnet/zh-hant/System.Net.Http.xml",
         "ref/net45/_._",
         "ref/netcore50/System.Net.Http.dll",
         "ref/netcore50/System.Net.Http.xml",
         "ref/win8/_._",
-        "ref/wpa81/_._",
-        "System.Net.Http.nuspec"
+        "ref/wpa81/_._"
       ]
     }
   },
