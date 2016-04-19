@@ -62,9 +62,13 @@ namespace FoodTile.Views
             // (( We have existing data     AND   Not forcing) OR Try get that data )
             if ((App.MainViewModel.HfsData!=null && !force)||await App.MainViewModel.GetData())
             {
-                TotalBlock.Text = $"{App.MainViewModel.HfsData.resident_dining.balance:C}";
-                AvgSpendBlock.Text = $"{App.MainViewModel.AverageSpend:C} per day";
-                DaysBlock.Text = $"{App.MainViewModel.TermInfo.FullDaysRemaining} days";
+                var hfsData = App.MainViewModel.HfsData;
+                TotalBlock.Text = $"{hfsData.resident_dining.balance:C}";
+                AvgSpendBlock.Text = $"{hfsData.resident_dining.balance/ App.MainViewModel.TermInfo.AdjustedDaysRemaining(Helpers.LoadSavedDatesList()):C} per day";
+                DaysBlock.Text = $"{App.MainViewModel.TermInfo.AdjustedDaysRemaining(Helpers.LoadSavedDatesList())} days";
+
+                HuskyAcct.Text = $"Husky Card: {hfsData?.student_husky_card?.balance:C}";
+                EmpAcct.Text = $"Employee Acct: {hfsData?.employee_husky_card?.balance:C}";
             }
             else
             {

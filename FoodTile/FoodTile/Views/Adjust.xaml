@@ -16,7 +16,7 @@
             </Grid.RowDefinitions>
             <StackPanel>
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}">Add Dates</TextBlock>
-                <TextBlock TextWrapping="WrapWholeWords" Margin="0,12">Add dates you will not be eating on campus. Tap to remove extra days from the list.</TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" Margin="0,12">Add dates you will not be eating on campus. Tap to remove extra days from the list.  Once you add dates here we will adjust your average spend and dates remaining throughout the app!</TextBlock>
                 <TextBlock TextWrapping="WrapWholeWords" FontStyle="Italic">Please note this feature is still in development and may not fully work.</TextBlock>
             </StackPanel>
 

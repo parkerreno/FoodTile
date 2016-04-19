@@ -32,34 +32,12 @@ namespace FoodTile.Views
         {
             this.InitializeComponent();
             
-            _dates = LoadSavedDates();
+            _dates = Helpers.LoadSavedDates();
             _dates.CollectionChanged += _dates_CollectionChanged;
             DatesListView.ItemsSource = _dates;
         }
 
-        private ObservableCollection<DateTime> LoadSavedDates()
-        {
-            var settings = ApplicationData.Current.RoamingSettings.Values;
-            if (settings["AdjustedDates"] == null)
-            {
-                return new ObservableCollection<DateTime>();
-            }
-            else
-            {
-                var rawString = settings["AdjustedDates"] as string;
-                var stringDates = rawString.Split('\n');
-                ObservableCollection<DateTime> toReturn = new ObservableCollection<DateTime>();
-
-                DateTime toAdd;
-                foreach (var stringDate in stringDates)
-                {
-                    if (DateTime.TryParse(stringDate, out toAdd))
-                        toReturn.Add(toAdd);
-                }
-
-                return toReturn;
-            }
-        }
+        
 
         private void _dates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using NotificationsExtensions.Toasts;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
@@ -49,7 +52,7 @@ namespace BackgroundUpdater
                 var hfs = await connector.GetHfsData();
                 var term = await connector.GetTermInfo();
 
-                double average = hfs.resident_dining.balance / term.FullDaysRemaining;
+                double average = hfs.resident_dining.balance / term.AdjustedDaysRemaining(LoadSavedDates());
 
                 if ((bool)(appdata.Values["TileUpdates"] ?? false))
                 {
@@ -60,19 +63,19 @@ namespace BackgroundUpdater
 
                     medItems.Add(new TileText()
                     {
-                        Text = $"${hfs.resident_dining.balance:0.00} remaining",
+                        Text = $"{hfs.resident_dining.balance:C} remaining",
                         Style = TileTextStyle.Body
                     });
 
                     items.Add(new TileText()
                     {
-                        Text = $"${hfs.resident_dining.balance:0.00} remaining",
+                        Text = $"{hfs.resident_dining.balance:C} remaining",
                         Style = TileTextStyle.Subtitle
                     });
 
                     var line2 = new TileText()
                     {
-                        Text = $"{term.FullDaysRemaining} days",
+                        Text = $"{term.AdjustedDaysRemaining(LoadSavedDates())} days",
                         Style = TileTextStyle.Caption
                     };
 
@@ -135,7 +138,7 @@ namespace BackgroundUpdater
                                 },
                                 BodyTextLine2 = new ToastText()
                                 {
-                                    Text = $"{term.FullDaysRemaining} days remaining in quarter"
+                                    Text = $"{term.AdjustedDaysRemaining(LoadSavedDates())} days remaining in quarter"
                                 }
                             }
                         };
@@ -150,5 +153,30 @@ namespace BackgroundUpdater
             connector.Dispose();
             _defferal.Complete();
         }
+
+        private static List<DateTime> LoadSavedDates()
+        {
+            var settings = ApplicationData.Current.RoamingSettings.Values;
+            if (settings["AdjustedDates"] == null)
+            {
+                return new List<DateTime>();
+            }
+            else
+            {
+                var rawString = settings["AdjustedDates"] as string;
+                var stringDates = rawString.Split('\n');
+                List<DateTime> toReturn = new List<DateTime>();
+
+                foreach (var stringDate in stringDates)
+                {
+                    DateTime toAdd;
+                    if (DateTime.TryParse(stringDate, out toAdd))
+                        toReturn.Add(toAdd);
+                }
+
+                return toReturn;
+            }
+        }
+
     }
 }

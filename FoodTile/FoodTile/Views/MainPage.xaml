@@ -12,36 +12,44 @@
                 <AppBarButton Label="Settings" Tapped="Settings_Tapped"/>
                 <AppBarButton Label="About" Tapped="About_Tapped"/>
             </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="Filter" Label="Adjust" Tapped="Adjust_Tapped" IsEnabled="False"/>
+            <AppBarButton Icon="Filter" Label="Adjust" Tapped="Adjust_Tapped"/>
             <AppBarButton Icon="OutlineStar" Label="Review" Tapped="Review_Tapped"></AppBarButton>
             <AppBarButton Icon="Refresh" Label="Refresh" Tapped="Refresh_Tapped"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="12">
-            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+        <ScrollViewer>
+            <StackPanel Margin="12">
+                <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
             You have
-            </TextBlock>
-            <TextBlock x:Name="TotalBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                </TextBlock>
+                <TextBlock x:Name="TotalBlock" Style="{ThemeResource HeaderTextBlockStyle}">
                 loading...
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+                <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
             so you can spend
-            </TextBlock>
-            <TextBlock x:Name="AvgSpendBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                </TextBlock>
+                <TextBlock x:Name="AvgSpendBlock" Style="{ThemeResource HeaderTextBlockStyle}">
                 loading...
-            </TextBlock>
-            <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
+                </TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" Style="{ThemeResource SubheaderTextBlockStyle}">
             over the next
-            </TextBlock>
-            <TextBlock x:Name="DaysBlock" Style="{ThemeResource HeaderTextBlockStyle}">
+                </TextBlock>
+                <TextBlock x:Name="DaysBlock" Style="{ThemeResource HeaderTextBlockStyle}">
                 0 days
-            </TextBlock>
-            <TextBlock  Style="{ThemeResource BodyTextBlockStyle}">
-              
-            </TextBlock>
-        </StackPanel>
+                </TextBlock>
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Margin="0,24,0,0" >
+                    Other Accounts:
+                </TextBlock>
+                <TextBlock x:Name="HuskyAcct" Style="{ThemeResource SubheaderTextBlockStyle}">
+                    Husky Card: $0
+                </TextBlock>
+                <TextBlock x:Name="EmpAcct" Style="{ThemeResource SubheaderTextBlockStyle}">
+                    Employee Acct: $0
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
